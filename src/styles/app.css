@@ -1,0 +1,143 @@
+.app-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin: 0 auto;
+  max-width: 1180px;
+  padding: 3rem 1.5rem 4rem;
+}
+
+.hero {
+  align-items: flex-end;
+  display: flex;
+  gap: 2rem;
+  justify-content: space-between;
+}
+
+.eyebrow {
+  color: #00796b !important;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  color: #173047;
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+  margin: 0.45rem 0 0.75rem;
+}
+
+.hero__description {
+  color: #526174;
+  font-size: 1.05rem;
+  margin: 0;
+  max-width: 720px;
+}
+
+.security-badge {
+  background: #dff4ed;
+  border: 1px solid #aadccd;
+  border-radius: 999px;
+  color: #00695c;
+  font-size: 0.82rem;
+  font-weight: 800;
+  padding: 0.5rem 0.8rem;
+  white-space: nowrap;
+}
+
+.auth-actions {
+  align-items: center;
+  color: #34465b;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.auth-message {
+  color: #526174;
+  font-size: 0.88rem;
+  margin: 0;
+}
+
+.document-actions {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.status-message {
+  color: #526174;
+  font-size: 0.88rem;
+}
+
+.editor-loading {
+  align-items: center;
+  background: #fff;
+  border: 1px solid #cfd9e6;
+  border-radius: 14px;
+  color: #526174;
+  display: flex;
+  justify-content: center;
+  min-height: 480px;
+}
+
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+.button {
+  padding: 0.62rem 0.9rem;
+}
+
+.button--primary {
+  background: #00796b;
+}
+
+.button--primary:hover {
+  background: #00695c;
+}
+
+.button--secondary {
+  background: #173047;
+}
+
+.button--ghost {
+  background: transparent;
+  border-color: #b9c6d5;
+  color: #34465b;
+}
+
+.poc-note {
+  background: #fff8e6;
+  border: 1px solid #f0d58c;
+  border-radius: 10px;
+  color: #624b15;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  padding: 1rem 1.2rem;
+}
+
+@media (max-width: 760px) {
+  .app-container {
+    padding: 2rem 1rem 3rem;
+  }
+
+  .hero,
+  .document-actions {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .button-group {
+    justify-content: flex-start;
+  }
+}

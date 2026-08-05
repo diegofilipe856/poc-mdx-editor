@@ -1,0 +1,53 @@
+.editor-shell {
+  background: #fff;
+  border: 1px solid #cfd9e6;
+  border-radius: 14px;
+  box-shadow: 0 12px 32px rgb(15 23 42 / 8%);
+  overflow: hidden;
+}
+
+.mdx-editor {
+  --accentBase: #e8f5f2;
+  --accentSolid: #00796b;
+  --accentText: #005a4f;
+  font-family: inherit;
+}
+
+.editor-toolbar {
+  border-bottom: 1px solid #dbe3ed;
+  border-radius: 0;
+  flex-wrap: wrap;
+  padding: 0.55rem;
+}
+
+.mdx-content {
+  color: #1e293b;
+  font-family: inherit;
+  line-height: 1.7;
+  min-height: 420px;
+  padding: 1.5rem 2rem;
+}
+
+.mdx-content h1,
+.mdx-content h2,
+.mdx-content h3 {
+  color: #173047;
+  line-height: 1.25;
+}
+
+.mdx-content a {
+  color: #00796b;
+}
+
+.mdx-content img {
+  border-radius: 8px;
+  height: auto;
+  max-width: 100%;
+}
+
+@media (max-width: 640px) {
+  .mdx-content {
+    min-height: 360px;
+    padding: 1rem;
+  }
+}
