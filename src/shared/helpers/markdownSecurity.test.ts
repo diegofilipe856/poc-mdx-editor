@@ -7,11 +7,13 @@ describe('validateMarkdown', () => {
   })
 
   it.each([
-    '<iframe src="https://example.com"></iframe>',
-    '<script>alert(1)</script>',
     '![imagem](javascript:alert(1))',
     '[clique](javascript:alert(1))',
   ])('bloqueia conteúdo não autorizado: %s', (markdown) => {
     expect(validateMarkdown(markdown).ok).toBe(false)
+  })
+
+  it('aceita HTML para uso na POC', () => {
+    expect(validateMarkdown('<iframe src="https://example.com"></iframe>').ok).toBe(true)
   })
 })

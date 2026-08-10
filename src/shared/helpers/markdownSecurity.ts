@@ -24,10 +24,6 @@ export function validateMarkdown(markdown: string): MarkdownValidationResult {
 }
 
 function validateNode(node: MarkdownNode): MarkdownValidationResult {
-  if (node.type === 'html') {
-    return { ok: false, error: 'HTML arbitrário não é permitido.' }
-  }
-
   if (node.type === 'image' && node.url && !isSafeImageSource(node.url)) {
     return { ok: false, error: 'A imagem possui uma origem não permitida.' }
   }

@@ -5,7 +5,11 @@ import { unified } from 'unified'
 
 export function markdownToHtml(markdown: string): string {
   return String(
-    unified().use(remarkParse).use(remarkRehype).use(rehypeStringify).processSync(markdown),
+    unified()
+      .use(remarkParse)
+      .use(remarkRehype, { allowDangerousHtml: true })
+      .use(rehypeStringify, { allowDangerousHtml: true })
+      .processSync(markdown),
   )
 }
 

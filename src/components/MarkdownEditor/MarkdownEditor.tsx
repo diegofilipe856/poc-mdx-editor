@@ -48,7 +48,10 @@ export function MarkdownEditor({
       linkPlugin(),
       linkDialogPlugin(),
       tablePlugin(),
-      imagePlugin({ imageUploadHandler, disableImageResize: true }),
+       imagePlugin({
+         allowSetImageDimensions: true,
+         imageUploadHandler,
+       }),
       diffSourcePlugin({ viewMode: 'rich-text' }),
       markdownShortcutPlugin(),
       toolbarPlugin({

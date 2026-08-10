@@ -9,7 +9,9 @@ describe('createHtmlDocument', () => {
     expect(html).toContain('<a href="https://example.com">site</a>')
   })
 
-  it('escapa HTML informado no Markdown', () => {
-    expect(createHtmlDocument('<script>alert(1)</script>')).not.toContain('<script>')
+  it('preserva HTML informado no Markdown na POC', () => {
+    expect(createHtmlDocument('<img src="data:image/png;base64,abc" alt="Logo" />')).toContain(
+      '<img src="data:image/png;base64,abc" alt="Logo" />',
+    )
   })
 })

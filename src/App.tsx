@@ -4,6 +4,7 @@ import {
   useCallback,
   useRef,
   useState,
+  useEffect,
   type ChangeEvent,
 } from 'react'
 import type { MDXEditorMethods } from '@mdxeditor/editor'
@@ -12,6 +13,7 @@ import { readLocalMarkdownFile } from './shared/helpers/localMarkdownFile'
 import {
   createHtmlDocument,
   downloadTextFile,
+  markdownToHtml,
 } from './shared/helpers/documentExport'
 import { loadMarkdown } from './shared/helpers/markdownStorage'
 import { validateMarkdown } from './shared/helpers/markdownSecurity'
@@ -42,6 +44,18 @@ export function App() {
     }
   })
   const [status, setStatus] = useState('Documento pronto para edição.')
+  const [readingHtml, setReadingHtml] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (!readingHtml) return
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setReadingHtml(null)
+    }
+
+    window.addEventListener('keydown', handleEscape)
+    return () => window.removeEventListener('keydown', handleEscape)
+  }, [readingHtml])
 
   const handleChange = useCallback((_markdown: string, initialNormalize: boolean) => {
     if (!initialNormalize) {
@@ -78,6 +92,18 @@ export function App() {
     } catch {
       setStatus('Não foi possível gerar o HTML deste documento.')
     }
+  }
+
+  const handleOpenReadingModal = () => {
+    const markdown = editorRef.current?.getMarkdown() ?? ''
+    const validation = validateMarkdown(markdown)
+
+    if (!validation.ok) {
+      setStatus(`Visualização bloqueada: ${validation.error}`)
+      return
+    }
+
+    setReadingHtml(markdownToHtml(markdown))
   }
 
   const handleOpenFile = async (event: ChangeEvent<HTMLInputElement>) => {
@@ -131,7 +157,7 @@ export function App() {
             Edição visual, fonte Markdown, imagens, persistência local e exportação de arquivos.
           </p>
         </div>
-        <div className="security-badge">HTML arbitrário bloqueado</div>
+        <div className="security-badge">Modo POC: HTML permitido</div>
       </header>
 
       <section aria-label="Editor de conteúdo">
@@ -158,6 +184,9 @@ export function App() {
             <button className="button button--primary" onClick={handleExportHtml} type="button">
               Exportar HTML
             </button>
+            <button className="button button--reading" onClick={handleOpenReadingModal} type="button">
+              Modal
+            </button>
           </div>
         </div>
 
@@ -175,6 +204,32 @@ export function App() {
         convertidos para data URL para permitir persistência sem backend. Em produção,
         substitua o handler por uma API autenticada que retorne uma URL HTTPS.
       </aside>
+
+      {readingHtml && (
+        <div
+          aria-label="Pré-visualização do documento"
+          className="reading-modal__backdrop"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) setReadingHtml(null)
+          }}
+          role="presentation"
+        >
+          <section aria-labelledby="reading-modal-title" aria-modal="true" className="reading-modal" role="dialog">
+            <header className="reading-modal__header">
+              <h2 id="reading-modal-title">Visualização do documento</h2>
+              <button
+                aria-label="Fechar visualização"
+                className="reading-modal__close"
+                onClick={() => setReadingHtml(null)}
+                type="button"
+              >
+                ×
+              </button>
+            </header>
+            <article className="reading-modal__content" dangerouslySetInnerHTML={{ __html: readingHtml }} />
+          </section>
+        </div>
+      )}
     </main>
   )
 }
